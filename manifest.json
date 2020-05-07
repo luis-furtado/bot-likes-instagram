@@ -1,0 +1,14 @@
+{
+  "name": "Robô Curtidas Instagram",
+  "version": "0.1",
+  "description": "Build an Extension!",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": ["style.css"],
+      "js": ["contentscript.js"]
+    }
+  ],
+  "web_accessible_resources": ["bot-likes-home.js", "follow-unfollow.js"]
+}

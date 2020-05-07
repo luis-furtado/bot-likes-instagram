@@ -1,0 +1,11 @@
+.buttonActive {
+  border: 1px solid black;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.buttonFollow {
+  border: 1px solid black;
+  background-color: transparent;
+  font-size: 16px;
+}
