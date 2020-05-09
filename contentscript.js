@@ -13,3 +13,11 @@ follow.src = chrome.extension.getURL("follow.js");
 follow.onload = function () {
   follow.parentNode.removeChild(follow);
 };
+
+//add unfollowed-back script
+var unfollowedBack = document.createElement("script");
+unfollowedBack.src = chrome.extension.getURL("unfollowed-back.js");
+(document.head || document.documentElement).appendChild(unfollowedBack);
+unfollowedBack.onload = function () {
+  unfollowedBack.parentNode.removeChild(unfollowedBack);
+};

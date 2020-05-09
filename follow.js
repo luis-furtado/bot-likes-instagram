@@ -8,7 +8,10 @@ function toggleName(name) {
   document.getElementById("buttonFollow").firstChild.data = name;
 }
 
-function toggleFollow() {
+async function toggleFollow() {
+  //create again to update the users
+  await createButton();
+
   toggleFollowButton = !toggleFollowButton;
 
   if (!toggleFollowButton || !people) {
@@ -35,7 +38,7 @@ function toggleFollow() {
   }, 60000);
 }
 
-function createButton() {
+async function createButton() {
   const newButton = document.createElement("div");
 
   newButton.innerHTML = `
@@ -64,6 +67,7 @@ checkInterval = setInterval(function () {
 
     clearInterval(checkInterval);
     console.log("botFollowUnfollow loaded!");
+  } else {
+    console.log("botFollowUnfollow not loaded!");
   }
-  console.log("botFollowUnfollow not loaded!");
 }, 5000);

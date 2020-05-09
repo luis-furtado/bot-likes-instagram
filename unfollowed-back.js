@@ -5,13 +5,35 @@ var notFollowBack = [];
 var totalFollowing;
 var totalFollowers;
 
-processComponents();
+var limitRequests = false;
+
+createButtonUnfollowedBack();
+
+function createButtonUnfollowedBack() {
+  var interval = setInterval(() => {
+    var buttonsContainer = document.getElementsByClassName("k9GMp ")[0];
+
+    if (buttonsContainer) {
+      var buttonDiv = document.createElement("li");
+      buttonDiv.innerHTML = `
+      <button type="button" onclick="processComponents()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
+      style="margin-top: -5px;">
+        <span class="-nal3 ">
+          Não segue de volta
+        </span>
+      </button>
+    `;
+      buttonsContainer.appendChild(buttonDiv);
+      clearInterval(interval);
+    }
+  }, 2000);
+}
 
 async function processComponents() {
   processTotalUsers();
   await processUsers("followers");
   await processUsers("following");
-  await processUsersNotFollowBack();
+  notFollowBack = await processUsersNotFollowBack();
   await manipulateContainer();
   await removeUsersFollowBack();
 }
@@ -32,10 +54,29 @@ async function processUsers(user) {
   console.log("initializing process " + user);
 
   await clickButton();
+  changeLayoutContainer();
   await processContainer();
   await getUsers();
   if (user == "followers") {
     await closeContainer();
+  }
+
+  function changeLayoutContainer() {
+    return new Promise((resolve) => {
+      var interval = setInterval(() => {
+        var title = document.getElementsByClassName("m82CD")[0];
+        if (title) {
+          title = title.firstChild;
+          title.textContent = "Carregando...";
+          var usersLoadingContainer = document.getElementsByClassName(
+            "isgrP"
+          )[0];
+          usersLoadingContainer.classList.add("usersLoadingContainer");
+          clearInterval(interval);
+          resolve();
+        }
+      }, 2000);
+    });
   }
 
   function clickButton() {
@@ -77,7 +118,13 @@ async function processUsers(user) {
           "FPmhX notranslate  _0imsa "
         )[count];
 
-        if (count == (user == "following" ? totalFollowing : totalFollowers)) {
+        if (
+          count == (user == "following" ? totalFollowing : totalFollowers) ||
+          count > 500
+        ) {
+          // if (count > 1000) {
+          //   limitRequests = true;
+          // }
           clearInterval(interval);
           resolve();
           console.log(user == "following" ? followingUsers : followedUsers);
@@ -93,12 +140,13 @@ async function processUsers(user) {
         } else {
           count--;
         }
+
         count++;
       }, 1);
     });
   }
 
-  async function closeContainer() {
+  function closeContainer() {
     return new Promise((resolve) => {
       console.log("close container");
       var closeButton = document.getElementsByClassName("wpO6b ")[1];
@@ -109,17 +157,24 @@ async function processUsers(user) {
 }
 
 async function processUsersNotFollowBack() {
-  var userNotFollowBack = followingUsers.filter(
+  var usersNotFollowBack = followingUsers.filter(
     (user) => followedUsers.indexOf(user) == -1
   );
-  console.log(userNotFollowBack);
+  console.log(usersNotFollowBack);
+  return usersNotFollowBack;
 }
 
 // manipulate following container to not following back container
 async function manipulateContainer() {
   var titleContainer = document.getElementsByClassName("m82CD")[0];
   var title = titleContainer.firstChild;
-  title.textContent = "Não segue de volta";
+  title.textContent = `Não segue de volta: ${notFollowBack.length}`;
+
+  var usersLoadingContainer = document.getElementsByClassName("isgrP")[0];
+  usersLoadingContainer.classList.remove("usersLoadingContainer");
+
+  var buttonHashtags = document.getElementsByClassName("_9MPbZ")[0];
+  buttonHashtags.remove();
 
   // var containerLoading = document.createElement("div");
   // containerLoading.className = "containerLoading";
@@ -138,8 +193,13 @@ async function manipulateContainer() {
 
 async function removeUsersFollowBack() {
   return new Promise((resolve) => {
+    if (limitRequests) {
+      alert(
+        "Reduzimos a quantidade de usuários que não segue de volta. O instagram limita o número de requisições."
+      );
+    }
     console.log("remove users following back");
-    var count = 0;
+    var count = followedUsers.length - 1;
     var interval = setInterval(() => {
       var follow = containerFollowers.childNodes[count];
 
@@ -147,7 +207,7 @@ async function removeUsersFollowBack() {
         "FPmhX notranslate  _0imsa "
       )[count];
 
-      if (count == notFollowBack.length - 1) {
+      if (count < 0) {
         clearInterval(interval);
         resolve();
         console.log("finish!");
@@ -157,13 +217,13 @@ async function removeUsersFollowBack() {
         var follow_username = link_username.textContent;
         follow.scrollIntoView();
 
-        if (notFollowBack.indexOf(follow_username) != -1) {
+        if (notFollowBack.indexOf(follow_username) == -1) {
           follow.remove();
         }
       } else {
-        count--;
+        count++;
       }
-      count++;
+      count--;
     }, 1);
   });
 }

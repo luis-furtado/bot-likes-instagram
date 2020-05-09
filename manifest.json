@@ -10,5 +10,9 @@
       "js": ["contentscript.js"]
     }
   ],
-  "web_accessible_resources": ["bot-likes-home.js", "follow.js"]
+  "web_accessible_resources": [
+    "bot-likes-home.js",
+    "follow.js",
+    "unfollowed-back.js"
+  ]
 }

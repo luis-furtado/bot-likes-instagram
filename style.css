@@ -10,7 +10,36 @@
   font-size: 16px;
 }
 
-.containerLoading {
+.loadingDiv {
+  display: absolute;
+  background-color: black;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.containerLoadingDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -10%;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.textContainerLoadingDiv {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.usersLoadingContainer {
+  opacity: 0.5;
+}
+
+/* .containerLoading {
   margin-top: -700px;
   background-color: rgb(0, 0, 0);
   opacity: 0.5;
@@ -33,4 +62,4 @@
   font-weight: bold;
   font-size: 20;
   border-radius: 6px;
-}
+} */
