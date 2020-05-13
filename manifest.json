@@ -5,14 +5,15 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
+      "matches": ["https://www.instagram.com/*"],
       "css": ["style.css"],
       "js": ["contentscript.js"]
     }
   ],
   "web_accessible_resources": [
     "bot-likes-home.js",
-    "follow.js",
+    "bot-follow.js",
     "unfollowed-back.js"
-  ]
+  ],
+  "permissions": ["storage"]
 }

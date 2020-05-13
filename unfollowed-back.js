@@ -9,6 +9,12 @@ var limitRequests = false;
 
 createButtonUnfollowedBack();
 
+function createNotFollowBackContainer() {
+  var notFollowBackContainer = document.createElement("div");
+  notFollowBackContainer.setAttribute("class", "RnEpo Yx5HN    ");
+  notFollowBackContainer.setAttribute("role", "presentation");
+}
+
 function createButtonUnfollowedBack() {
   var interval = setInterval(() => {
     var buttonsContainer = document.getElementsByClassName("k9GMp ")[0];
@@ -19,7 +25,7 @@ function createButtonUnfollowedBack() {
       <button type="button" onclick="processComponents()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
       style="margin-top: -5px;">
         <span class="-nal3 ">
-          Não segue de volta
+          Carregar
         </span>
       </button>
     `;
@@ -75,7 +81,7 @@ async function processUsers(user) {
           clearInterval(interval);
           resolve();
         }
-      }, 2000);
+      }, 200);
     });
   }
 
@@ -90,7 +96,7 @@ async function processUsers(user) {
           clearInterval(interval);
           resolve();
         }
-      }, 2000);
+      }, 200);
     });
   }
 
@@ -107,24 +113,34 @@ async function processUsers(user) {
     });
   }
 
-  function getUsers() {
-    return new Promise((resolve) => {
+  async function getUsers() {
+    return new Promise(async (resolve) => {
       console.log("get users");
       var count = 0;
-      var interval = setInterval(() => {
+      var interval = setInterval(async () => {
         var follow = containerFollowers.childNodes[count];
 
         var link_username = document.getElementsByClassName(
           "FPmhX notranslate  _0imsa "
         )[count];
 
+        if (count % 2000 == 0 && count > 0) {
+          console.log("waiting ten minutes...");
+          async function waitTenMinutes() {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                console.log("waiting ten minutes finish!...");
+              }, 300000);
+            });
+          }
+          await waitTenMinutes();
+          console.log("finish waiting ten minutes");
+        }
+
         if (
-          count == (user == "following" ? totalFollowing : totalFollowers) ||
-          count > 500
+          count ==
+          (user == "following" ? totalFollowing - 5 : totalFollowers - 5)
         ) {
-          // if (count > 1000) {
-          //   limitRequests = true;
-          // }
           clearInterval(interval);
           resolve();
           console.log(user == "following" ? followingUsers : followedUsers);
@@ -175,20 +191,6 @@ async function manipulateContainer() {
 
   var buttonHashtags = document.getElementsByClassName("_9MPbZ")[0];
   buttonHashtags.remove();
-
-  // var containerLoading = document.createElement("div");
-  // containerLoading.className = "containerLoading";
-
-  // var containerInsideLoadingContainer = document.createElement("div");
-  // containerInsideLoadingContainer.className = "containerInsideLoadingContainer";
-  // containerInsideLoadingContainer.innerHTML = `
-  //   <h3 class="loadingIcon">Carregando...</h3>
-  // `;
-
-  // containerLoading.appendChild(containerInsideLoadingContainer);
-
-  // var container = document.getElementsByClassName("pbNvD  fPMEg    HYpXt")[0];
-  // container.appendChild(containerLoading);
 }
 
 async function removeUsersFollowBack() {

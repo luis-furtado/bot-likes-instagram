@@ -2,10 +2,14 @@ var interval = 0;
 var consecutiveLikesAlreadyRegistred = 0;
 var toggleBotButton = 0;
 
+function toggleName(name) {
+  document.getElementById("activeButton").textContent = name;
+}
+
 function toggleBot() {
   toggleBotButton = !toggleBotButton;
 
-  toggleName("Off");
+  toggleName("Parar");
 
   var mainDiv = document.getElementsByClassName("cGcGK")[0].children[1]
     .children[0];
@@ -15,12 +19,11 @@ function toggleBot() {
     if (!toggleBotButton) {
       clearInterval(interval);
       interval = 0;
-      toggleName("On");
+      toggleName("Iniciar");
       return;
     }
 
-    var rand = Math.random() * 3000 + 1000;
-    console.log(rand);
+    var rand = Math.random() * 3000 + 2000;
     interval = setTimeout(function () {
       var button =
         mainDiv.children[count].children[2].children[0].children[0].children[0];
@@ -35,7 +38,7 @@ function toggleBot() {
         if (consecutiveLikesAlreadyRegistred == 5) {
           clearInterval(interval);
           interval = 0;
-          toggleName("On");
+          toggleName("Iniciar");
           consecutiveLikesAlreadyRegistred = 0;
           return;
         }
@@ -48,16 +51,13 @@ function toggleBot() {
   })();
 }
 
-function toggleName(name) {
-  document.getElementById("activeButton").firstChild.data = name;
-}
-
 function createButton() {
   const divExtensionButton = document.createElement("div");
 
   divExtensionButton.innerHTML = `
-        <div class="buttonActive">
-          <button id="activeButton" type="button" onClick="toggleBot()">Bot</button>
+        <div>
+          <button id="activeButton" type="button" onClick="toggleBot()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
+          style="margin-top: -4px;">Iniciar</button>
         </div>
     `;
 
@@ -71,5 +71,3 @@ function createButton() {
 }
 
 createButton();
-
-console.log("botLikesHome loaded!");
