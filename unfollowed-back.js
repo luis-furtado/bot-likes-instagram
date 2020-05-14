@@ -7,6 +7,8 @@ var totalFollowers;
 
 var limitRequests = false;
 
+var count = 0;
+
 createButtonUnfollowedBack();
 
 function createNotFollowBackContainer() {
@@ -25,7 +27,7 @@ function createButtonUnfollowedBack() {
       <button type="button" onclick="processComponents()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
       style="margin-top: -5px;">
         <span class="-nal3 ">
-          Carregar
+          Não segue de volta
         </span>
       </button>
     `;
@@ -38,6 +40,8 @@ function createButtonUnfollowedBack() {
 async function processComponents() {
   processTotalUsers();
   await processUsers("followers");
+  console.log("waiting ten minutes to proceed");
+  await waitTenMinutes();
   await processUsers("following");
   notFollowBack = await processUsersNotFollowBack();
   await manipulateContainer();
@@ -46,12 +50,25 @@ async function processComponents() {
 
 function processTotalUsers() {
   var interval = setInterval(() => {
-    totalFollowers = document.getElementsByClassName("g47SY ")[1].textContent;
-    totalFollowing = document.getElementsByClassName("g47SY ")[2].textContent;
+    totalFollowers = document
+      .getElementsByClassName("g47SY ")[1]
+      .textContent.replace(",", "");
+    totalFollowing = document
+      .getElementsByClassName("g47SY ")[2]
+      .textContent.replace(",", "");
     if (totalFollowing && totalFollowers) {
       clearInterval(interval);
       console.log("Following " + totalFollowing);
       console.log("Followers " + totalFollowers);
+      var totalUsers =
+        parseFloat(totalFollowers.replace(",", "")) +
+        parseFloat(totalFollowing.replace(",", ""));
+      console.log("Total users " + totalUsers);
+      alert(
+        "Essa ação durará aproximadamente " +
+          (Math.floor(totalUsers / 2000) * 15 + 1) +
+          " minuto(s)"
+      );
     }
   }, 200);
 }
@@ -62,6 +79,7 @@ async function processUsers(user) {
   await clickButton();
   changeLayoutContainer();
   await processContainer();
+  count = 0;
   await getUsers();
   if (user == "followers") {
     await closeContainer();
@@ -113,10 +131,9 @@ async function processUsers(user) {
     });
   }
 
-  async function getUsers() {
-    return new Promise(async (resolve) => {
+  function getUsers() {
+    return new Promise((resolve) => {
       console.log("get users");
-      var count = 0;
       var interval = setInterval(async () => {
         var follow = containerFollowers.childNodes[count];
 
@@ -125,16 +142,11 @@ async function processUsers(user) {
         )[count];
 
         if (count % 2000 == 0 && count > 0) {
-          console.log("waiting ten minutes...");
-          async function waitTenMinutes() {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                console.log("waiting ten minutes finish!...");
-              }, 300000);
-            });
-          }
+          clearInterval(interval);
+          console.log("call function wait ten minutes...");
           await waitTenMinutes();
-          console.log("finish waiting ten minutes");
+          console.log("callback getUsers function");
+          getUsers();
         }
 
         if (
@@ -227,5 +239,14 @@ async function removeUsersFollowBack() {
       }
       count--;
     }, 1);
+  });
+}
+
+function waitTenMinutes() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("waiting ten minutes finish!...");
+      resolve();
+    }, 450000);
   });
 }

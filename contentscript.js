@@ -1,3 +1,33 @@
+//stored Variables
+// var containerNotFollowBack;
+
+// chrome.storage.local.get(["containerHtml"], function (response) {
+//   containerNotFollowBack = response.containerHtml;
+// });
+
+// var interval = setInterval(() => {
+//   var container = document.getElementsByClassName("RnEpo Yx5HN    ")[0];
+//   if (container) {
+//     chrome.storage.local.clear();
+//     chrome.storage.local.set(
+//       { containerHtml: container.innerHTML },
+//       function () {
+//         console.log("test stored");
+//       }
+//     );
+//     clearInterval(interval);
+//   }
+// }, 2000);
+
+// var globalVariables = document.createElement("script");
+// globalVariables.innerHTML = `
+//   var containerNotFollowBack = ${containerNotFollowBack};
+// `;
+// (document.head || document.documentElement).appendChild(globalVariables);
+// globalVariables.onload = function () {
+//   globalVariables.parentNode.removeChild(globalVariables);
+// };
+
 //add bot-likes-home script
 var botLikesHome = document.createElement("script");
 botLikesHome.src = chrome.extension.getURL("bot-likes-home.js");
@@ -21,38 +51,3 @@ unfollowedBack.src = chrome.extension.getURL("unfollowed-back.js");
 unfollowedBack.onload = function () {
   unfollowedBack.parentNode.removeChild(unfollowedBack);
 };
-
-//create content not follow back stored
-// var interval = setInterval(() => {
-//   //cleaning
-//   chrome.storage.local.clear(function () {
-//     var error = chrome.runtime.lastError;
-//     if (error) {
-//       console.error(error);
-//     }
-//   });
-
-//   //store
-//   var titleContainer = document.getElementsByClassName("m82CD")[0];
-//   if (titleContainer) {
-//     var title = titleContainer.firstChild.textContent;
-//     if (title.includes("Não segue de volta")) {
-//       var container = document.getElementsByTagName("body")[0].lastChild;
-//       var htmlContent = container.innerHTML;
-//       chrome.storage.local.set(
-//         { containerNotFollowBack: htmlContent },
-//         function () {
-//           console.log("the htmlContent of UsersNotFollowBack was stored!");
-//           console.log("stored -> " + htmlContent);
-//         }
-//       );
-//       clearInterval(interval);
-//     }
-//   }
-// }, 12000);
-
-//getting storaged data and store in global variables
-// chrome.storage.local.get(["containerNotFollowBack"], function (result) {
-//   console.log("Value currently is " + result.containerNotFollowBack);
-//   storedNotFollowBackHtml = result.key;
-// });

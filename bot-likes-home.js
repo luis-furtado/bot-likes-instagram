@@ -51,7 +51,7 @@ function toggleBot() {
   })();
 }
 
-function createButton() {
+function createBotLikesButton() {
   const divExtensionButton = document.createElement("div");
 
   divExtensionButton.innerHTML = `
@@ -70,4 +70,17 @@ function createButton() {
   console.log("Button bot-likes-home created!");
 }
 
-createButton();
+createBotLikesButton();
+
+var interval = setInterval(() => {
+  var titleContainer = document.getElementsByClassName("m82CD")[0];
+  if (titleContainer) {
+    var title = titleContainer.firstChild.textContent;
+    if (title.includes("Não segue de volta")) {
+      var container = document.getElementsByTagName("body")[0].lastChild;
+      var htmlContent = container.innerHTML;
+      createBotLikesButton();
+      clearInterval(interval);
+    }
+  }
+}, 12000);

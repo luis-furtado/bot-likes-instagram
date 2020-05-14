@@ -14,7 +14,6 @@ function enableBotFollowButton(enabled) {
 
 function waitFiveMinutes() {
   return new Promise((resolve) => {
-    var count = 0;
     setTimeout(() => {
       console.log("wait 5 minutes successfull!!!");
       resolve();
@@ -56,22 +55,24 @@ function toggleFollow() {
 }
 
 function createButton() {
-  alert(
-    "O instagram só permite que cada conta siga apenas 10 usuários por minuto."
-  );
+  // alert(
+  //   "O instagram só permite que cada conta siga apenas 10 usuários por minuto."
+  // );
   const newButton = document.createElement("div");
+  newButton.classList.add("buttonFollow");
 
   newButton.innerHTML = `
-      <div class="buttonFollow">
         <button class="sqdOP  L3NKy _4pI4F   _8A5w5    "
         style="margin-top: 4px;" id="buttonFollow" type="button" onClick="toggleFollow()">Seguir</button>
-      </div>
   `;
 
   const container = document.getElementsByClassName("eiUFA")[0];
 
   if (container) {
     // put Button of extension
+    if (container.firstChild.getAttribute("class") == "buttonFollow") {
+      return;
+    }
     container.insertBefore(newButton, container.children[1]);
   }
   console.log("Button bot-follow created!");
