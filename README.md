@@ -5,7 +5,7 @@ Insta Robot
 
 Features
 --------
-* Google Extension Created with pure ES6 with no framework.
+* Google Extension Created with pure ES6.
 * Interval limits of requests base on Instagram policy.
 
 How Works
