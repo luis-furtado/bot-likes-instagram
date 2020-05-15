@@ -27,7 +27,7 @@ function createButtonUnfollowedBack() {
       <button type="button" onclick="processComponents()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
       style="margin-top: -5px;">
         <span class="-nal3 ">
-          Não segue de volta
+          Not follow you back
         </span>
       </button>
     `;
@@ -40,8 +40,8 @@ function createButtonUnfollowedBack() {
 async function processComponents() {
   processTotalUsers();
   await processUsers("followers");
-  console.log("waiting ten minutes to proceed");
-  await waitTenMinutes();
+  console.log("waiting fifteen minutes to proceed");
+  await waitFifteenMinutes();
   await processUsers("following");
   notFollowBack = await processUsersNotFollowBack();
   await manipulateContainer();
@@ -65,9 +65,9 @@ function processTotalUsers() {
         parseFloat(totalFollowing.replace(",", ""));
       console.log("Total users " + totalUsers);
       alert(
-        "Essa ação durará aproximadamente " +
-          (Math.floor(totalUsers / 2000) * 15 + 1) +
-          " minuto(s)"
+        "This action take  " +
+          (Math.floor(totalUsers / 2000) * 15 + 16) +
+          " minut(s)"
       );
     }
   }, 200);
@@ -143,8 +143,8 @@ async function processUsers(user) {
 
         if (count % 2000 == 0 && count > 0) {
           clearInterval(interval);
-          console.log("call function wait ten minutes...");
-          await waitTenMinutes();
+          console.log("call function wait fifteen minutes...");
+          await waitFifteenMinutes();
           console.log("callback getUsers function");
           getUsers();
         }
@@ -196,7 +196,7 @@ async function processUsersNotFollowBack() {
 async function manipulateContainer() {
   var titleContainer = document.getElementsByClassName("m82CD")[0];
   var title = titleContainer.firstChild;
-  title.textContent = `Não segue de volta: ${notFollowBack.length}`;
+  title.textContent = `Not follow you back: ${notFollowBack.length}`;
 
   var usersLoadingContainer = document.getElementsByClassName("isgrP")[0];
   usersLoadingContainer.classList.remove("usersLoadingContainer");
@@ -207,11 +207,6 @@ async function manipulateContainer() {
 
 async function removeUsersFollowBack() {
   return new Promise((resolve) => {
-    if (limitRequests) {
-      alert(
-        "Reduzimos a quantidade de usuários que não segue de volta. O instagram limita o número de requisições."
-      );
-    }
     console.log("remove users following back");
     var count = followedUsers.length - 1;
     var interval = setInterval(() => {
@@ -242,10 +237,10 @@ async function removeUsersFollowBack() {
   });
 }
 
-function waitTenMinutes() {
+function waitFifteenMinutes() {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log("waiting ten minutes finish!...");
+      console.log("waiting fifteen minutes finish!...");
       resolve();
     }, 450000);
   });

@@ -28,24 +28,24 @@ function toggleFollow() {
 
   if (!toggleFollowButton || !people) {
     clearInterval(followInterval);
-    toggleNameFollow("Seguir");
+    toggleNameFollow("Start Bot");
+    return;
   }
 
-  toggleNameFollow("Parar");
+  toggleNameFollow("Stop");
 
   followInterval = setInterval(async () => {
     var button = people[countFollow].firstChild.childNodes[1].firstChild;
     var textButton = button.textContent;
-    if (textButton == "Unfollow") {
+    if (textButton == "Follow") {
       button.click();
-      document.getElementsByClassName("aOOlW -Cab_   ")[0].click();
     }
     people[countFollow > 2 ? countFollow - 2 : countFollow].scrollIntoView();
     countFollow++;
     if (countFollow % 10 == 0) {
       clearInterval(followInterval);
       toggleFollowButton = !toggleFollowButton;
-      toggleNameFollow("Esperando 5 minutos...");
+      toggleNameFollow("Waiting 5 minutes...");
       enableBotFollowButton(false);
       await waitFiveMinutes();
       console.log("successfull, callback toggleFollow()");
@@ -63,7 +63,7 @@ function createButton() {
 
   newButton.innerHTML = `
         <button class="sqdOP  L3NKy _4pI4F   _8A5w5    "
-        style="margin-top: 4px;" id="buttonFollow" type="button" onClick="toggleFollow()">Seguir</button>
+        style="margin-top: 4px;" id="buttonFollow" type="button" onClick="toggleFollow()">Start Bot</button>
   `;
 
   const container = document.getElementsByClassName("eiUFA")[0];

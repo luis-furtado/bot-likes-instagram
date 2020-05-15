@@ -9,7 +9,7 @@ function toggleName(name) {
 function toggleBot() {
   toggleBotButton = !toggleBotButton;
 
-  toggleName("Parar");
+  toggleName("Stop");
 
   var mainDiv = document.getElementsByClassName("cGcGK")[0].children[1]
     .children[0];
@@ -19,7 +19,7 @@ function toggleBot() {
     if (!toggleBotButton) {
       clearInterval(interval);
       interval = 0;
-      toggleName("Iniciar");
+      toggleName("Start");
       return;
     }
 
@@ -38,7 +38,7 @@ function toggleBot() {
         if (consecutiveLikesAlreadyRegistred == 5) {
           clearInterval(interval);
           interval = 0;
-          toggleName("Iniciar");
+          toggleName("Start");
           consecutiveLikesAlreadyRegistred = 0;
           return;
         }
@@ -57,13 +57,14 @@ function createBotLikesButton() {
   divExtensionButton.innerHTML = `
         <div>
           <button id="activeButton" type="button" onClick="toggleBot()" class="sqdOP  L3NKy _4pI4F   _8A5w5    "
-          style="margin-top: -4px;">Iniciar</button>
+          style="margin-top: -4px;">Start</button>
         </div>
     `;
 
   const navButtons = document.getElementsByClassName("_47KiJ")[0];
+  const stories = document.getElementsByClassName("ku8Bn ")[0];
 
-  if (navButtons) {
+  if (navButtons && stories) {
     // put Button of extension
     navButtons.insertBefore(divExtensionButton, navButtons.firstChild);
   }
@@ -76,7 +77,7 @@ var interval = setInterval(() => {
   var titleContainer = document.getElementsByClassName("m82CD")[0];
   if (titleContainer) {
     var title = titleContainer.firstChild.textContent;
-    if (title.includes("Não segue de volta")) {
+    if (title.includes("Not follow Back")) {
       var container = document.getElementsByTagName("body")[0].lastChild;
       var htmlContent = container.innerHTML;
       createBotLikesButton();
