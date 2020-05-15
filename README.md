@@ -12,6 +12,7 @@ How Works
 ---------
 
 > ### Bot Likes Home will like all posts in your home feed
+> <img src="/img/bot-likes-home.png" width="300">
 > ![Button Bot Likes Home](/img/bot-likes-home.png =400x250)
 
 > ### Bot follow will follow users from another account
